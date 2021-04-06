@@ -43,6 +43,11 @@ export default {
           linesArr[i] = lines[i].split("\t");
         }
         vm.workers = linesArr;
+
+        // vm.workersのそれぞれの配列の10〜18までを全て削除したい
+        for (let h = 0; h < vm.workers.length; h++) {
+          vm.workers[h].slice(10, 9);
+        }
         console.log("vm.workers",vm.workers);
         
         // ページ情報を取得
@@ -74,9 +79,9 @@ export default {
         // 登録された例文のみを取得
         let sentenceUnique = [];
         for (let m = 0; m < linesArr.length; m++) {
-          sentenceUnique.push(linesArr[m].slice(9, 16));
+          sentenceUnique.push(linesArr[m].slice(9, 22));
         }
-          // console.log("sentenceUnique",sentenceUnique);
+          console.log("sentenceUnique",sentenceUnique);
 
         // 登録された例文をそれぞれのチャプターへ挿入
         let eachContent = [];
