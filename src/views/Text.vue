@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="frontBody">
-        <div class="eachSentence" v-for="firstPageContent in firstPageContents" v-bind:key="firstPageContent.id">
+        <div class="eachSentence" v-for="firstPageContent in chapterContent.slice(5, 15)" v-bind:key="firstPageContent.id">
           <div class="eachHead">
             <p>□</p>
             <p>{{firstPageContent[0]}}</p>
@@ -23,6 +23,34 @@
           </div>
         </div>
       </div>
+      <footer>24/7English</footer>
+      <div class="backHeader" :style="[bgColor, titleColor]">
+        <div class="backTitle">
+          {{chapterContent[2]}}
+        </div>
+        <div class="backNum">
+          {{chapterContent[0]}}
+        </div>
+      </div>
+      <div class="backBody">
+        <div class="eachSentence" v-for="secondPageContent in chapterContent.slice(5, 15)" v-bind:key="secondPageContent.id">
+          <div class="eachHead">
+            <p>□</p>
+            <p>{{secondPageContent[0]}}</p>
+          </div>
+          <div class="eachContent">
+            <p>{{secondPageContent[2]}}</p>
+          </div>
+          <div class="eachHint">
+            <p>{{secondPageContent[3]}}</p>
+            <p>{{secondPageContent[4]}}</p>
+          </div>
+        </div>
+        <div class="topic">
+          {{chapterContent[4]}}
+        </div>
+      </div>
+
     </div>
 
 
@@ -36,8 +64,8 @@ export default {
     return {
       pageSetting: [],
       chapterContents: [],
-      firstPageContents: [],
-      secondPageContents: [],
+      // firstPageContents: [],
+      // secondPageContents: [],
       bgColor: "",
       titleColor: "",
     }
@@ -48,18 +76,18 @@ export default {
     this.bgColor = { background: this.pageSetting[2] };
     this.titleColor = { color: this.pageSetting[3]};
 
-    /* １ページ目のコンテンツまとめ */
-    for (let i = 0; i < this.chapterContents.length; i++) {
-      for (let j = 0; j < 10; j++) {
-        this.firstPageContents.push(this.chapterContents[i][j+5].slice(0, 3))
-      }
-    }
-    /* ２ページ目のコンテンツまとめ */
-    for (let k = 0; k < this.chapterContents.length; k++) {
-      for (let l = 0; l < 10; l++) {
-        this.secondPageContents.push(this.chapterContents[k][l+5].slice(2, 5))
-      }
-    }
+    // /* １ページ目のコンテンツまとめ */
+    // for (let i = 0; i < this.chapterContents.length; i++) {
+    //   for (let j = 0; j < 10; j++) {
+    //     this.firstPageContents.push(this.chapterContents[i][j+5].slice(0, 3))
+    //   }
+    // }
+    // /* ２ページ目のコンテンツまとめ */
+    // for (let k = 0; k < this.chapterContents.length; k++) {
+    //   for (let l = 0; l < 10; l++) {
+    //     this.secondPageContents.push(this.chapterContents[k][l+5].slice(2, 5))
+    //   }
+    // }
 
 
 
