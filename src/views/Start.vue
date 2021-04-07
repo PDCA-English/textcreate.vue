@@ -46,7 +46,7 @@ export default {
 
         // vm.workersのそれぞれの配列の10〜18までを全て削除したい
         for (let h = 0; h < vm.workers.length; h++) {
-          vm.workers[h].slice(10, 9);
+          vm.workers[h].splice(10, 9);
         }
         console.log("vm.workers",vm.workers);
         

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="frontHeader" :style="bgColor">
+    <div class="frontHeader" :style="[bgColor, titleColor]">
       <div class="frontHeaderLeft">
         <p>{{chapterContents[0][0]}}</p>
         <p :style="titleColor">{{chapterContents[0][1]}}</p>
@@ -11,14 +11,14 @@
       </div>
     </div>
     <div class="frontBody">
-      <div class="eachSentence">
-        <div class="eachHead">
+      <div class="eachSentence" v-for="eachContents in chapterContents" v-bind:key="eachContents.id">
+        <div class="eachHead" v-for="eachSentence in eachContents" v-bind:key="eachSentence.id">
           <p>□</p>
-          <p>01</p>
+          <p>{{eachSentence[0]}}</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][5][10]}}</p>
-          <p>{{chapterContents[0][5][5]}}</p>
+          <p v-html="chapterContents[0][5][1]"></p>
+          <p>{{chapterContents[0][5][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -27,8 +27,8 @@
           <p>02</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][6][10]}}</p>
-          <p>{{chapterContents[0][6][5]}}</p>
+          <p>{{chapterContents[0][6][1]}}</p>
+          <p>{{chapterContents[0][6][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -37,8 +37,8 @@
           <p>03</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][7][10]}}</p>
-          <p>{{chapterContents[0][7][5]}}</p>
+          <p>{{chapterContents[0][7][1]}}</p>
+          <p>{{chapterContents[0][7][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -47,8 +47,8 @@
           <p>04</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][8][10]}}</p>
-          <p>{{chapterContents[0][8][5]}}</p>
+          <p>{{chapterContents[0][8][1]}}</p>
+          <p>{{chapterContents[0][8][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -57,8 +57,8 @@
           <p>05</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][9][10]}}</p>
-          <p>{{chapterContents[0][9][5]}}</p>
+          <p>{{chapterContents[0][9][1]}}</p>
+          <p>{{chapterContents[0][9][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -67,8 +67,8 @@
           <p>06</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][10][10]}}</p>
-          <p>{{chapterContents[0][10][5]}}</p>
+          <p>{{chapterContents[0][10][1]}}</p>
+          <p>{{chapterContents[0][10][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -77,8 +77,8 @@
           <p>07</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][11][10]}}</p>
-          <p>{{chapterContents[0][11][5]}}</p>
+          <p>{{chapterContents[0][11][1]}}</p>
+          <p>{{chapterContents[0][11][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -87,8 +87,8 @@
           <p>08</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][12][10]}}</p>
-          <p>{{chapterContents[0][12][5]}}</p>
+          <p>{{chapterContents[0][12][1]}}</p>
+          <p>{{chapterContents[0][12][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -97,8 +97,8 @@
           <p>09</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][13][10]}}</p>
-          <p>{{chapterContents[0][13][5]}}</p>
+          <p>{{chapterContents[0][13][1]}}</p>
+          <p>{{chapterContents[0][13][2]}}</p>
         </div>
       </div>
       <div class="eachSentence">
@@ -107,8 +107,8 @@
           <p>10</p>
         </div>
         <div class="eachContent">
-          <p>{{chapterContents[0][14][10]}}</p>
-          <p>{{chapterContents[0][14][5]}}</p>
+          <p>{{chapterContents[0][14][1]}}</p>
+          <p>{{chapterContents[0][14][2]}}</p>
         </div>
       </div>
     </div>
@@ -124,6 +124,8 @@ export default {
     return {
       pageSetting: [],
       chapterContents: [],
+      firstPageContents: [],
+      secondPageContents: [],
       bgColor: "",
       titleColor: "",
     }
@@ -133,6 +135,22 @@ export default {
     this.chapterContents = this.$route.query.chapterContents;
     this.bgColor = { background: this.pageSetting[2] };
     this.titleColor = { color: this.pageSetting[3]};
+
+    /* １ページ目のコンテンツまとめ */
+    for (let i = 0; i < this.chapterContents.length; i++) {
+      for (let j = 0; j < 10; j++) {
+        this.firstPageContents.push(this.chapterContents[i][j+5].slice(0, 3))
+      }
+    }
+    /* ２ページ目のコンテンツまとめ */
+    for (let k = 0; k < this.chapterContents.length; k++) {
+      for (let l = 0; l < 10; l++) {
+        this.secondPageContents.push(this.chapterContents[k][l+5].slice(2, 5))
+      }
+    }
+
+
+
   },
 }
 </script>
