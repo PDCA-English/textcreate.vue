@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div id="content" v-for="chapterContent in chapterContents" v-bind:key="chapterContent.id">
+    <button class="btn" @click="downloadPDF">Download PDF</button>
+    <div id="content" ref="pdf" v-for="chapterContent in chapterContents" v-bind:key="chapterContent.id">
       <div class="frontHeader" :style="[bgColor, titleColor]">
         <div class="frontHeaderLeft">
           <p>{{chapterContent[0]}}</p>
@@ -18,12 +19,13 @@
             <p>{{firstPageContent[0]}}</p>
           </div>
           <div class="eachContent">
-            <p v-html="firstPageContent[1]"></p>
+            <p class="firstEsentence" v-html="firstPageContent[1]"></p>
             <p>{{firstPageContent[2]}}</p>
           </div>
         </div>
       </div>
       <footer>24/7English</footer>
+      <div class="pagebreak"></div>
       <div class="backHeader" :style="[bgColor, titleColor]">
         <div class="backTitle">
           {{chapterContent[2]}}
@@ -50,7 +52,8 @@
           {{chapterContent[4]}}
         </div>
       </div>
-
+      <footer>24/7English</footer>
+      <div class="pagebreak"></div>
     </div>
 
 
@@ -59,6 +62,9 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf'
+// import html2canvas from "html2canvas"
+
 export default {
   data() {
     return {
@@ -92,10 +98,27 @@ export default {
 
 
   },
+  methods: {
+  downloadPDF () {
+  const doc = new jsPDF();
+  doc.html(document.frontHeader, {
+   callback: function (doc) {
+     doc.save();
+   },
+   x: 10,
+   y: 10
+});
+ }
+}
 }
 </script>
 
 <style>
+#app {
+  width: 182mm;
+  height: 257mm;
+}
+
 .frontHeader {
   display: flex;
   width: 100%;
@@ -115,8 +138,12 @@ export default {
   display: flex;
 }
 
-.strong {
-  font-weight: 800;
+.firstEsentence {
+  font-weight: bold;
+  text-decoration:underline
 }
 
+.pagebreak {
+  break-after: page;
+}
 </style>
