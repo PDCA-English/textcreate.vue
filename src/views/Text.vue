@@ -33,14 +33,13 @@
               <div class="eachContent">
                 <p class="firstEsentence" v-html="firstPageContent[1]"></p>
                 <p class="firstJsentence">{{ firstPageContent[2] }}</p>
-                <p clas="dotline" :style="dotLine"></p>
+                <p class="dotline" :style="dotLine"></p>
               </div>
             </div>
             <p class="solidLine" :style="bgColor"></p>
           </div>
           <footer>24/7English</footer>
         </div>
-        <div class="pagebreak"></div>
         <div class="page">
           <div class="backHeader" :style="bgColor">
             <div class="backTitle" :style="titleColor">
@@ -77,7 +76,6 @@
           <p class="solidLine" :style="bgColor"></p>
           <footer>24/7English</footer>
         </div>
-        <div class="pagebreak"></div>
       </div>
     </div>
   </div>
@@ -104,7 +102,7 @@ export default {
     this.chapterContents = this.$route.query.chapterContents;
     this.bgColor = { background: this.pageSetting[2] };
     this.titleColor = { color: this.pageSetting[3]};
-    this.dotLine = { 'border-bottom': this.pageSetting[2]};
+    this.dotLine = { 'border-bottom': `dotted 2px ${this.pageSetting[2]}`};
 
 
 
@@ -127,15 +125,72 @@ export default {
   },
   methods: {
     downloadPDF() {
+      console.log("start download");
       const source = this.$refs.pdf;
-      console.log(source);
-      html2canvas(source).then((capture) => {
-        const imgData = capture.toDataURL("image/png");
-        // ここから追記
-        const doc = new jsPDF();
-        const width = doc.internal.pageSize.width;
-        doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
-        doc.save("sample.pdf");
+      // html2canvas(source).then((capture) => {
+      //   const imgData = capture.toDataURL("image/png");
+      //   // ここから追記
+      //   const doc = new jsPDF();
+      //   const width = doc.internal.pageSize.width;
+      //   doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
+      //   doc.addPage();
+      //   doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
+      //   doc.save("sample.pdf");
+      // });
+      html2canvas(source).then((canvas) => {
+        //! MAKE YOUR PDF
+        var pdf = new jsPDF("p", "pt", "b5");
+
+        console.log(i <= source.offsetHeight / 980);
+
+        for (var i = 0; i <= source.offsetHeight / 980; i++) {
+          console.log("start for" + i);
+          //! This is all just html2canvas stuff
+          var srcImg = canvas;
+          var sX = 0;
+          var sY = 1120 * i; // start 980 pixels down for every new page
+          var sWidth = 778;
+          var sHeight = 1120;
+          var dX = 0;
+          var dY = 0;
+          var dWidth = 778;
+          var dHeight = 1120;
+
+          const onePageCanvas = document.createElement("canvas");
+          onePageCanvas.setAttribute("width", 778);
+          onePageCanvas.setAttribute("height", 1120);
+          var ctx = onePageCanvas.getContext("2d");
+          // details on this usage of this function:
+          // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
+          ctx.drawImage(
+            srcImg,
+            sX,
+            sY,
+            sWidth,
+            sHeight,
+            dX,
+            dY,
+            dWidth,
+            dHeight
+          );
+
+          // document.body.appendChild(canvas);
+          var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+
+          var width = onePageCanvas.width;
+          var height = onePageCanvas.clientHeight;
+
+          //! If we're on anything other than the first page,
+          // add another page
+          if (i > 0) {
+            pdf.addPage();
+          }
+          //! now we add content to that page!
+          pdf.addImage(canvasDataURL, "PNG", 0, 0, width * 0.72, height * 0.71);
+        }
+        //! after the for loop is finished running, we save the pdf.
+        pdf.save("result.pdf");
+        console.log("end download");
       });
     },
 }
@@ -222,11 +277,13 @@ export default {
 
 .frontBody {
   position: relative;
-
 }
 
 .dotline {
-  border-bottom: dotted 3px;
+  width: 690px;
+  position: relative;
+  right: 60px;
+  top: 5px;
 }
 
 .eachSentence {
@@ -254,10 +311,6 @@ export default {
   margin-top: 0;
 }
 
-.pagebreak {
-  break-after: page;
-}
-
 #intro {
   font-size: 0.3px;
   text-align: left;
@@ -271,6 +324,7 @@ export default {
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 30px;
+  margin-top: 150px;
 }
 
 .backTitle {
@@ -326,7 +380,6 @@ export default {
 .eachHint {
   font-size: 12px;
 }
-
 
 
 </style>
