@@ -33,10 +33,10 @@
               <div class="eachContent">
                 <p class="firstEsentence" v-html="firstPageContent[1]"></p>
                 <p class="firstJsentence">{{ firstPageContent[2] }}</p>
-                <p class="dotline" :style="dotLine"></p>
+                <p class="dotline" :style="dotLine">--------------------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
-            <p class="solidLine" :style="bgColor"></p>
+            <p class="solidLine" :style="bgColor"  id="firstBottomLine"></p>
           </div>
           <footer>24/7English</footer>
         </div>
@@ -102,7 +102,7 @@ export default {
     this.chapterContents = this.$route.query.chapterContents;
     this.bgColor = { background: this.pageSetting[2] };
     this.titleColor = { color: this.pageSetting[3]};
-    this.dotLine = { 'border-bottom': `dotted 2px ${this.pageSetting[2]}`};
+    this.dotLine = { color: this.pageSetting[2]};
 
 
 
@@ -186,7 +186,7 @@ export default {
             pdf.addPage();
           }
           //! now we add content to that page!
-          pdf.addImage(canvasDataURL, "PNG", 0, 0, width * 0.72, height * 0.71);
+          pdf.addImage(canvasDataURL, "PNG", 50, 50, width * 0.72, height * 0.71);
         }
         //! after the for loop is finished running, we save the pdf.
         pdf.save("result.pdf");
@@ -200,6 +200,10 @@ export default {
 <style>
 #app {
   width: 182mm;
+}
+
+#content {
+  transform: scale(0.81);
 }
 
 .page {
@@ -242,6 +246,7 @@ export default {
   font-size: 20px;
   position: relative;
   top: 0;
+  right: 1px;
   margin: 0;
   padding: 5px;
   padding-left: 15px;
@@ -262,9 +267,10 @@ export default {
   position: relative;
   display: block;
   padding: 0;
-  margin: 20px 0 10px 0; 
+  margin: 10px 0 5px 0; 
   width: 100%;
 }
+
 
 .square {
   margin: 14px 5px 2px 5px;
@@ -284,6 +290,13 @@ export default {
   position: relative;
   right: 60px;
   top: 5px;
+  margin: 0;
+  z-index: 10;
+}
+
+#firstBottomLine {
+  top: -18px;
+  z-index: 10;
 }
 
 .eachSentence {
@@ -309,6 +322,7 @@ export default {
 .firstJsentence {
   text-align: left;
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 #intro {
@@ -324,7 +338,7 @@ export default {
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 30px;
-  margin-top: 150px;
+  margin-top: 420px;
 }
 
 .backTitle {
