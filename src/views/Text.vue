@@ -57,18 +57,22 @@
               v-for="secondPageContent in chapterContent.slice(5, 15)"
               v-bind:key="secondPageContent.id"
             >
-              <div class="eachHead">
-                <p class="square">□</p>
-                <p class="eachNum">{{ secondPageContent[0] }}</p>
+              <div class="secondFlex">            
+                <div class="eachHead">
+                  <p class="square">□</p>
+                  <p class="eachNum">{{ secondPageContent[0] }}</p>
+                </div>
+                <div class="eachContent">
+                  <p id="backJsentence">{{ secondPageContent[2] }}</p>
+                </div>
+                <div class="eachHint" :style="dotLine">
+                  <p id="hintone">◉ {{ secondPageContent[3] }}</p>
+                  <p id="hinttwo">{{ secondPageContent[4] }}</p>
+                </div>
               </div>
-              <div class="eachContent">
-                <p id="backJsentence">{{ secondPageContent[2] }}</p>
-              </div>
-              <div class="eachHint">
-                <p id="hintone">◉ {{ secondPageContent[3] }}</p>
-                <p id="hinttwo">{{ secondPageContent[4] }}</p>
-              </div>
+              <p class="dotline" id="secondDot"  :style="dotLine">--------------------------------------------------------------------------------------------------------------------------------</p>
             </div>
+            
             <div class="topic">
               {{ chapterContent[4] }}
             </div>
@@ -310,6 +314,7 @@ export default {
 
 .eachContent {
   margin-left: 15px;
+  width: 500px;
 }
 
 .firstEsentence {
@@ -371,9 +376,20 @@ export default {
 }
 
 .eachSentenceBack {
-  display: flex;
+  /* display: flex; */
   margin: 1px 0;
-  justify-content: space-between;
+  height: 70px;
+  /* justify-content: space-between; */
+}
+
+.secondFlex {
+  display: flex;
+}
+
+#secondDot {
+  position: relative;
+  top: -15px;
+  left: 0;
 }
 
 #hintone {
@@ -393,6 +409,9 @@ export default {
 
 .eachHint {
   font-size: 12px;
+  width: 200px;
+  margin-left: auto;
+  text-align: left;
 }
 
 
