@@ -50,7 +50,7 @@ export default {
         }
         console.log("vm.workers",vm.workers);
         
-        // ページ情報を取得
+        // ページ情報を取得s
         for (let j = 0; j < 4; j++) {
           vm.pageSetting.push(linesArr[0].[j]);
         }
