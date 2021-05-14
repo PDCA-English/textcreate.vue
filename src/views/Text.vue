@@ -141,7 +141,9 @@ export default {
       //   doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
       //   doc.save("sample.pdf");
       // });
-      html2canvas(source).then((canvas) => {
+      html2canvas(source,{
+        scale: 3
+      }).then((canvas) => {
         //! MAKE YOUR PDF
         var pdf = new jsPDF("p", "pt", "b5");
 
@@ -152,17 +154,17 @@ export default {
           //! This is all just html2canvas stuff
           var srcImg = canvas;
           var sX = 0;
-          var sY = 1120 * i; // start 980 pixels down for every new page
-          var sWidth = 778;
-          var sHeight = 1120;
+          var sY = 0; // start 980 pixels down for every new page
+          var sWidth = 778*3;
+          var sHeight = 1120*3;
           var dX = 0;
           var dY = 0;
-          var dWidth = 778;
-          var dHeight = 1120;
+          var dWidth = 778*3;
+          var dHeight = 1120*3;
 
           const onePageCanvas = document.createElement("canvas");
-          onePageCanvas.setAttribute("width", 778);
-          onePageCanvas.setAttribute("height", 1120);
+          onePageCanvas.setAttribute("width", 778*3);
+          onePageCanvas.setAttribute("height", 1120*3);
           var ctx = onePageCanvas.getContext("2d");
           // details on this usage of this function:
           // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
@@ -190,7 +192,7 @@ export default {
             pdf.addPage();
           }
           //! now we add content to that page!
-          pdf.addImage(canvasDataURL, "PNG", 50, 50, width * 0.72, height * 0.71);
+          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.865/3, height * 0.8/3);
         }
         //! after the for loop is finished running, we save the pdf.
         pdf.save("result.pdf");
@@ -212,6 +214,7 @@ export default {
 
 .page {
   height: 257mm;
+  margin-right: 20px;
 }
 
 #bgNo {
