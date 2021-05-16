@@ -3,8 +3,6 @@
     <input type="file" @change="loadCsvFile" />
     <p>{{ message }}</p>
     <button @click="nextPage()">変換</button>
-
- 
     <table border="1">
       <tr v-for="(worker, index) in workers" :key="index">
         <td v-for="(column, index) in worker" :key="index">{{ column }}</td>

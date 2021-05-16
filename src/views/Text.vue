@@ -33,14 +33,14 @@
               <div class="eachContent">
                 <p class="firstEsentence" v-html="firstPageContent[1]"></p>
                 <p class="firstJsentence">{{ firstPageContent[2] }}</p>
-                <p class="dotline" :style="dotLine">--------------------------------------------------------------------------------------------------------------------------------</p>
+                <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">----------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
             <p class="solidLine" :style="bgColor"  id="firstBottomLine"></p>
           </div>
           <footer>24/7English</footer>
         </div>
-        <div class="page">
+        <div class="page" id="secondPage">
           <div class="backHeader" :style="bgColor">
             <div class="backTitle" :style="titleColor">
               {{ chapterContent[2] }}
@@ -63,22 +63,23 @@
                   <p class="eachNum">{{ secondPageContent[0] }}</p>
                 </div>
                 <div class="eachContent">
-                  <p id="backJsentence">{{ secondPageContent[2] }}</p>
+                  <p id="backJsentence" v-if="secondPageContent[2].length > 24">{{ secondPageContent[2] }}</p>
+                  <p id="shortBackJsentence" v-if="secondPageContent[2].length <= 24">{{ secondPageContent[2] }}</p>
                 </div>
                 <div class="eachHint" :style="dotLine">
                   <p id="hintone">◉ {{ secondPageContent[3] }}</p>
                   <p id="hinttwo">{{ secondPageContent[4] }}</p>
                 </div>
               </div>
-              <p class="dotline" id="secondDot"  :style="dotLine">--------------------------------------------------------------------------------------------------------------------------------</p>
+              <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">----------------------------------------------------------------------------------------------------------------------</p>
             </div>
             
             <div class="topic">
               {{ chapterContent[4] }}
             </div>
           </div>
-          <p class="solidLine" :style="bgColor"></p>
-          <footer>24/7English</footer>
+          <p class="solidLine" :style="bgColor" id="lastLine"></p>
+          <footer id="lastFooter">24/7English</footer>
         </div>
       </div>
     </div>
@@ -94,8 +95,6 @@ export default {
     return {
       pageSetting: [],
       chapterContents: [],
-      // firstPageContents: [],
-      // secondPageContents: [],
       bgColor: "",
       dotLine: "",
       titleColor: "",
@@ -108,39 +107,12 @@ export default {
     this.titleColor = { color: this.pageSetting[3]};
     this.dotLine = { color: this.pageSetting[2]};
 
-
-
-
-    // /* １ページ目のコンテンツまとめ */
-    // for (let i = 0; i < this.chapterContents.length; i++) {
-    //   for (let j = 0; j < 10; j++) {
-    //     this.firstPageContents.push(this.chapterContents[i][j+5].slice(0, 3))
-    //   }
-    // }
-    // /* ２ページ目のコンテンツまとめ */
-    // for (let k = 0; k < this.chapterContents.length; k++) {
-    //   for (let l = 0; l < 10; l++) {
-    //     this.secondPageContents.push(this.chapterContents[k][l+5].slice(2, 5))
-    //   }
-    // }
-
-
-
   },
   methods: {
     downloadPDF() {
       console.log("start download");
       const source = this.$refs.pdf;
-      // html2canvas(source).then((capture) => {
-      //   const imgData = capture.toDataURL("image/png");
-      //   // ここから追記
-      //   const doc = new jsPDF();
-      //   const width = doc.internal.pageSize.width;
-      //   doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
-      //   doc.addPage();
-      //   doc.addImage(imgData, "PNG", 10, 10, width * 0.9, 0);
-      //   doc.save("sample.pdf");
-      // });
+      
       html2canvas(source,{
         scale: 3
       }).then((canvas) => {
@@ -154,7 +126,7 @@ export default {
           //! This is all just html2canvas stuff
           var srcImg = canvas;
           var sX = 0;
-          var sY = 0; // start 980 pixels down for every new page
+          var sY = 1120 * 3 * i; // start 980 pixels down for every new page
           var sWidth = 778*3;
           var sHeight = 1120*3;
           var dX = 0;
@@ -192,7 +164,7 @@ export default {
             pdf.addPage();
           }
           //! now we add content to that page!
-          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.865/3, height * 0.8/3);
+          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3);
         }
         //! after the for loop is finished running, we save the pdf.
         pdf.save("result.pdf");
@@ -208,13 +180,11 @@ export default {
   width: 182mm;
 }
 
-#content {
-  transform: scale(0.81);
-}
-
 .page {
   height: 257mm;
   margin-right: 20px;
+  padding: 40px 20px;
+  margin-bottom: 70px;
 }
 
 #bgNo {
@@ -262,6 +232,10 @@ export default {
 
 }
 
+.deleteDot {
+  color: black;
+}
+
 .frontHeaderLeft {
   display: flex;
   font-size: 30px;
@@ -296,14 +270,11 @@ export default {
   width: 690px;
   position: relative;
   right: 60px;
-  top: 5px;
+  top: 0;
   margin: 0;
+  height: 5px;
   z-index: 10;
-}
-
-#firstBottomLine {
-  top: -18px;
-  z-index: 10;
+  text-align: left;
 }
 
 .eachSentence {
@@ -316,8 +287,17 @@ export default {
 }
 
 .eachContent {
-  margin-left: 15px;
-  width: 500px;
+  width: 600px;
+  height: 60px;
+}
+
+.backBody .eachContent {
+  width: 70%;
+}
+
+.backBody {
+  position: relative;
+  top: 10px;
 }
 
 .firstEsentence {
@@ -345,8 +325,7 @@ export default {
   height: 5%;
   font-size: 20px;
   font-weight: 800;
-  margin-bottom: 30px;
-  margin-top: 420px;
+  /* margin-top: 70px; */
 }
 
 .backTitle {
@@ -357,9 +336,10 @@ export default {
 
 .backNum {
   position: relative;
-  top: -93px;
-  left: 316px;
   font-size: 15px;
+  width: 60px;
+  margin: 0 0 0 auto;
+  top: -53px;
 }
 
 #bgNotwo {
@@ -368,20 +348,21 @@ export default {
   width: 40px;
   height: 40px;
   position: relative;
-  top: -43px;
-  left: 640px;
+  margin: 0 10px 0 auto;
+  top: -23px;
+  padding: 0;
 
 }
 
 #secondPageLine {
   position: relative;
-  top: -80px;
+  top: -40px;
 }
 
 .eachSentenceBack {
   /* display: flex; */
   margin: 1px 0;
-  height: 70px;
+  height: 60px;
   /* justify-content: space-between; */
 }
 
@@ -408,6 +389,17 @@ export default {
 
 #backJsentence {
   text-align: left;
+  margin: auto 0;
+  padding-top: 5px;
+  height: 60px;
+  width: 398px;
+}
+
+#shortBackJsentence {
+  text-align: left;
+  padding: auto 0;
+  height: 60px;
+  width: 398px;
 }
 
 .eachHint {
@@ -417,5 +409,28 @@ export default {
   text-align: left;
 }
 
+footer {
+  position: relative;
+  top: 20px;
+}
+
+.topic {
+  text-align: left;
+  width: 80%;
+  margin: 10px auto;
+  background-color: #e3e1e1;
+  padding: 20px 20px 80px 20px;
+  border-radius: 5px;
+  position: relative;
+  top: -10px;
+}
+
+#lastLine {
+  top: 10px;
+}
+
+#lastFooter {
+  top: 30px;
+}
 
 </style>
