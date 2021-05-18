@@ -121,7 +121,7 @@ export default {
 
         console.log(i <= source.offsetHeight / 980);
 
-        for (var i = 0; i <= source.offsetHeight / 980; i++) {
+        for (var i = 0; i <= (source.offsetHeight / 980) -1; i++) {
           console.log("start for" + i);
           //! This is all just html2canvas stuff
           var srcImg = canvas;
@@ -165,9 +165,15 @@ export default {
           }
           //! now we add content to that page!
           pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3);
+
+          if ((i+1) % 2 == 0) {
+            pdf.save(this.chapterContents[(i-1)/2][0] + ".pdf");
+            pdf.deletePage(1);
+            pdf.deletePage(1);
+          }
         }
         //! after the for loop is finished running, we save the pdf.
-        pdf.save("result.pdf");
+        // pdf.save("result.pdf");
         console.log("end download");
       });
     },
@@ -211,6 +217,7 @@ export default {
   font-weight: 700;
   left: -45px;
   top: 4px;
+  font-family: Meiryo;
 }
 
 .frontHeader {
@@ -276,6 +283,11 @@ export default {
   z-index: 10;
   text-align: left;
 }
+
+.frontBody .dotline {
+  padding-left: 12px;
+}
+
 
 .eachSentence {
   display: flex;
