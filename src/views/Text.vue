@@ -176,7 +176,8 @@ export default {
 
           if ((i+1) % 2 == 0) {
             // pdf.save(this.pageSetting[0] + "-" + (i+1)/2 + ".pdf");
-            pdf.save(this.pageSetting[0] + "-" + ( '00' + (i+1)/2 ).slice( -2 ) + ".pdf");
+            // pdf.save(this.pageSetting[0] + "-" + ( '00' + (i+1)/2 ).slice( -2 ) + ".pdf");
+            pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + ".pdf");
             pdf.deletePage(1);
             pdf.deletePage(1);
           }
