@@ -40,6 +40,7 @@ export default {
           linesArr[i] = lines[i].split("\t");
         }
         vm.workers = linesArr;
+        // console.log("linesArr",linesArr)
 
         // vm.workersのそれぞれの配列の10〜18までを全て削除したい
         for (let h = 0; h < vm.workers.length; h++) {
@@ -86,6 +87,7 @@ export default {
           eachContent.push(sentenceUnique.slice(10*n, (n+1)*10));
         }
         // console.log("eachContent",eachContent);
+
 
         // 例文とチャプターの情報をまとめてchapterContentsへ格納
         for (let n = 0; n < eachChapter.length; n++) {

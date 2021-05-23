@@ -33,7 +33,7 @@
               <div class="eachContent">
                 <p class="firstEsentence" v-html="firstPageContent[1]"></p>
                 <p class="firstJsentence">{{ firstPageContent[2] }}</p>
-                <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">----------------------------------------------------------------------------------------------------------------------</p>
+                <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">-----------------------------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
             <p class="solidLine" :style="bgColor"  id="firstBottomLine"></p>
@@ -41,10 +41,13 @@
           <footer>24/7English</footer>
         </div>
         <div class="page" id="secondPage">
+          <!-- <img src="../assets/back.png" alt="" class="pic"> -->
           <div class="backHeader" :style="bgColor">
             <div class="backTitle" :style="titleColor">
               {{ chapterContent[2] }}
             </div>
+            <div class="wboxOne"></div>
+            <div class="wboxTwo"></div>
             <p id="bgNotwo"></p>
             <div class="backNum">
               {{ chapterContent[0] }}
@@ -58,11 +61,11 @@
               v-bind:key="secondPageContent.id"
             >
               <div class="secondFlex">            
-                <div class="eachHead">
-                  <p class="square">□</p>
-                  <p class="eachNum">{{ secondPageContent[0] }}</p>
+                <div class="eachHead" id="eachSecondHead">
+                  <p class="square" id="secondSquare">□</p>
+                  <p class="eachNum" id="secondEachNum">{{ secondPageContent[0] }}</p>
                 </div>
-                <div class="eachContent">
+                <div class="eachContent" id="backEachContent">
                   <p id="backJsentence" v-if="secondPageContent[2].length > 24">{{ secondPageContent[2] }}</p>
                   <p id="shortBackJsentence" v-if="secondPageContent[2].length <= 24">{{ secondPageContent[2] }}</p>
                 </div>
@@ -71,12 +74,17 @@
                   <p id="hinttwo">{{ secondPageContent[4] }}</p>
                 </div>
               </div>
-              <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">----------------------------------------------------------------------------------------------------------------------</p>
+              <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">------------------------------------------------------------------------------------------------------------------------------------------</p>
             </div>
-            
             <div class="topic">
               {{ chapterContent[4] }}
             </div>
+            <div class="topic" id="cTopic" :style="bgColor"></div>
+            <div class="topic" id="wTopic"></div>
+            <div class="triangleUpLeft"></div>
+            <div class="triangleUpRight"></div>
+            <img src="../assets/string.png" alt="">
+            <div class="hole"></div>
           </div>
           <p class="solidLine" :style="bgColor" id="lastLine"></p>
           <footer id="lastFooter">24/7English</footer>
@@ -167,7 +175,8 @@ export default {
           pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3);
 
           if ((i+1) % 2 == 0) {
-            pdf.save(this.chapterContents[(i-1)/2][0] + ".pdf");
+            // pdf.save(this.pageSetting[0] + "-" + (i+1)/2 + ".pdf");
+            pdf.save(this.pageSetting[0] + "-" + ( '00' + (i+1)/2 ).slice( -2 ) + ".pdf");
             pdf.deletePage(1);
             pdf.deletePage(1);
           }
@@ -189,35 +198,35 @@ export default {
 .page {
   height: 257mm;
   margin-right: 20px;
-  padding: 40px 20px;
+  padding: 57px 47px 40px 35px;
   margin-bottom: 70px;
+  font-family: "メイリオ", Meiryo;
 }
 
 #bgNo {
   background-color: #ffffff;
   border-radius: 50%;
-  margin: 14px;
-  height: 50px;
-  width: 70px;
+  margin: 18px 11px 14px 17px;
+  height: 56px;
+  width: 100px;
 }
 
 #headNo {
   position: relative;
-  top: 9px;
-  left: -59px;
-  font-size: 18px;
+  top: 16px;
+  left: -64px;
+  font-size: 17px;
   font-weight: 700;
 }
 
 #headTitle {
-  font-size: 20px;
+  font-size: 23px;
   text-align: left;
-  width: 200px;
+  width: 217px;
   position: relative;
   font-weight: 700;
-  left: -45px;
+  left: -41px;
   top: 4px;
-  font-family: Meiryo;
 }
 
 .frontHeader {
@@ -227,16 +236,15 @@ export default {
 }
 
 #eTitle {
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   top: 0;
   right: 1px;
   margin: 0;
-  padding: 5px;
-  padding-left: 15px;
+  padding: 13px;
   text-align: left;
   font-weight: 700;
-
+  height: 17px;
 }
 
 .deleteDot {
@@ -255,18 +263,21 @@ export default {
   position: relative;
   display: block;
   padding: 0;
-  margin: 10px 0 5px 0; 
+  margin: 19px 0 5px 0;
   width: 100%;
 }
 
 
 .square {
-  margin: 14px 5px 2px 5px;
+  margin: 10px 5px 2px 4px;
+  font-size: 17px;
+  font-weight: bold;
 } 
 
 .eachNum {
-  margin: 16px 10px 2px 0;
-
+  margin: 10px 28px 2px 2px;
+  font-size: 17px;
+  font-weight: 900;
 }
 
 .frontBody {
@@ -276,12 +287,14 @@ export default {
 .dotline {
   width: 690px;
   position: relative;
-  right: 60px;
-  top: 0;
+  right: 81px;
+  top: 5px;
   margin: 0;
   height: 5px;
   z-index: 10;
   text-align: left;
+  font-size: 0.5px;
+  font-weight: 900;
 }
 
 .frontBody .dotline {
@@ -291,7 +304,7 @@ export default {
 
 .eachSentence {
   display: flex;
-  margin: 12px 0;
+  margin: 8.5px 0;
 }
 
 .eachHead {
@@ -313,16 +326,21 @@ export default {
 }
 
 .firstEsentence {
-  font-weight: bold;
   text-align: left;
   margin-bottom: 0;
   margin-top: 5px;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
 }
 
 .firstJsentence {
   text-align: left;
   margin-top: 0;
   margin-bottom: 0;
+  font-size: 12px;
+  position: relative;
+  top: -1px;
 }
 
 #intro {
@@ -334,58 +352,111 @@ export default {
 
 .backHeader {
   width: 100%;
-  height: 5%;
+  height: 79px;
   font-size: 20px;
   font-weight: 800;
-  /* margin-top: 70px; */
+  POSITION: relative;
+  top: -10px;
 }
 
 .backTitle {
   text-align: center;
   position: relative;
-  top: 10px;
+  top: 6px;
+  font-size: 24px;
 }
 
 .backNum {
   position: relative;
-  font-size: 15px;
+  font-size: 13px;
   width: 60px;
   margin: 0 0 0 auto;
-  top: -53px;
+  top: -59px;
+  right: 16px;
+}
+
+.wboxOne {
+ position: absolute;
+  width: 100%;
+  height: 29px;
+  background-color: #ffffff;
+  top: 50px;
+  opacity: 0.2;
+}
+
+.wboxTwo {
+  position: absolute;
+  width: 100%;
+  height: 19px;
+  background-color: #ffffff;
+  top: 60px;
+  opacity: 0.4;
+
 }
 
 #bgNotwo {
   background-color: #FFFF;
   border-radius: 50%;
-  width: 40px;
+  width: 41px;
   height: 40px;
   position: relative;
-  margin: 0 10px 0 auto;
-  top: -23px;
+  margin: 0 26px 0 auto;
+  top: -29px;
   padding: 0;
-
 }
 
 #secondPageLine {
   position: relative;
-  top: -40px;
+  top: -12px;
+  width: 584px;
+  margin-left: 2.5px;
+}
+
+#eachSecondHead {
+  height: 52px;
+  width: 66px;
+}
+
+#secondSquare {
+  font-size: 17px;
+  font-weight: bold;
+  height: 22px;
+  position: relative;
+  top: 6px;
+  right: -4px;
+  margin-right: 9px;
+}
+
+#secondEachNum {
+  margin: 16px 28px 2px 2px;
+  font-size: 17px;
+  font-weight: 900;
 }
 
 .eachSentenceBack {
-  /* display: flex; */
-  margin: 1px 0;
-  height: 60px;
-  /* justify-content: space-between; */
+  margin: 0;
+  height: 51px;
+  position: relative;
+  top: 11px;
 }
 
 .secondFlex {
   display: flex;
+  height: 52px;
 }
 
 #secondDot {
   position: relative;
-  top: -15px;
-  left: 0;
+  top: -6px;
+  left: 9px;
+}
+
+#backEachContent {
+  height: 51px;
+  width: 326px;
+  font-size: 13px;
+  padding: 5px 0 0 1px;
+  font-weight: 700;
 }
 
 #hintone {
@@ -395,8 +466,7 @@ export default {
 }
 
 #hinttwo {
-  margin-top: 2px;
-  margin-bottom: 9px;
+  margin: 2px 0 9px 12px;
 }
 
 #backJsentence {
@@ -404,45 +474,123 @@ export default {
   margin: auto 0;
   padding-top: 5px;
   height: 60px;
-  width: 398px;
+  width: 326px;
 }
 
 #shortBackJsentence {
   text-align: left;
   padding: auto 0;
   height: 60px;
-  width: 398px;
+  width: 326px;
 }
 
 .eachHint {
-  font-size: 12px;
-  width: 200px;
-  margin-left: auto;
+  font-size: 10px;
+  width: 303px;
+  padding: 5px 0 0 0;
   text-align: left;
+  font-weight: 700;
 }
 
 footer {
   position: relative;
-  top: 20px;
+  top: 7px;
+  font-size: 12px;
 }
 
 .topic {
   text-align: left;
-  width: 80%;
-  margin: 10px auto;
-  background-color: #e3e1e1;
-  padding: 20px 20px 80px 20px;
-  border-radius: 5px;
+  width: 422px;
+  height: 80px;
+  margin: 0 0 0 52px;
+  padding: 55px 14px 0 97px;
+  border-radius: 1px;
   position: relative;
-  top: -10px;
+  top: 38px;
+  font-size: 11px;
+  z-index: 10;
+}
+
+#cTopic {
+  z-index: 8;
+  position: absolute;
+  top: 549px;
+}
+
+#wTopic {
+  background-color: #ffffff;
+  opacity: 0.7;
+  z-index: 9;
+  position: absolute;
+  top: 549px;
+}
+
+.triangleUpLeft {
+  width: 0;
+  height: 0;
+  border-top: 12px solid #ffffff;
+  border-bottom: 12px solid transparent;
+  border-left: 12px solid #ffffff;
+  border-right: 12px solid transparent;
+  position: absolute;
+  z-index: 10;
+  top: 549px;
+  right: 510px;
+}
+
+.triangleUpRight {
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid #ffffff;
+  border-left: 12px solid #ffffff;
+  border-right: 12px solid transparent;
+  position: absolute;
+  z-index: 10;
+  top: 660px;
+  right: 510px;
 }
 
 #lastLine {
-  top: 10px;
+  top: 53.5px;
+  left: 2px;
 }
 
 #lastFooter {
-  top: 30px;
+  top: 59px;
+  font-size: 12px;
+  left: 2px;
 }
 
+.pic {
+  opacity: 0.5;
+  z-index: 10;
+  position: absolute;
+  width: 62%;
+  left: 43px;
+  top: 1217px;;
+}
+
+#secondPage {
+  margin-bottom: 34px;
+}
+
+.hole {
+  border-radius: 50%;
+  background-color: #ffffff;
+  width: 14px;
+  height: 14px;
+  z-index: 9;
+  position: absolute;
+  top: 609.5px;
+  left: 66px;
+}
+
+img {
+  position: absolute;
+  width: 64px;
+  z-index: 10;
+  left: 9px;
+  top: 606px;
+}
 </style>
