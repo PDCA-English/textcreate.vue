@@ -33,7 +33,7 @@
               <div class="eachContent">
                 <p class="firstEsentence" v-html="firstPageContent[1]"></p>
                 <p class="firstJsentence">{{ firstPageContent[2] }}</p>
-                <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">-----------------------------------------------------------------------------------------------------------------------------------------</p>
+                <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
             <p class="solidLine" :style="bgColor"  id="firstBottomLine"></p>
@@ -74,7 +74,7 @@
                   <p id="hinttwo">{{ secondPageContent[4] }}</p>
                 </div>
               </div>
-              <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">------------------------------------------------------------------------------------------------------------------------------------------</p>
+              <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
             </div>
             <div class="topic">
               {{ chapterContent[4] }}
@@ -342,6 +342,7 @@ export default {
   font-size: 12px;
   position: relative;
   top: -1px;
+  font-weight: 700;
 }
 
 #intro {

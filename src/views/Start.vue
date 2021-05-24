@@ -2,11 +2,6 @@
   <div id="app">
     <input type="file" @change="loadCsvFile" />
     <button @click="nextPage()">変換</button>
-    <!-- <table border="1">
-      <tr v-for="(worker, index) in workers" :key="index">
-        <td v-for="(column, index) in worker" :key="index">{{ column }}</td>
-      </tr>
-    </table> -->
   </div>
 </template>
  
@@ -14,7 +9,6 @@
 export default {
   data() {
     return {
-      // message: "",
       workers: [],
       pageSetting: [],
       chapterContents: [],
@@ -24,7 +18,6 @@ export default {
     loadCsvFile(e) {
       let vm = this;
       vm.workers = [];
-      // vm.message = "";
       vm.pageSetting = [];
       vm.chapterContents = [];
       let file = e.target.files[0];
