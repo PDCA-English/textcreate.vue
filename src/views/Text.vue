@@ -7,6 +7,7 @@
         v-bind:key="chapterContent.id"
       >
         <div class="page">
+          <img src="../assets/logo.png" alt="" class="logo">
           <div class="frontHeader">
             <div class="frontHeaderLeft" :style="bgColor">
               <p id="bgNo"></p>
@@ -17,7 +18,6 @@
               <p id="eTitle" :style="[bgColor, titleColor]">{{ chapterContent[2] }}</p>
               <p  id="intro">{{ chapterContent[3] }}</p>
             </div>
-            
           </div>
           <div class="frontBody">
             <p class="solidLine" :style="bgColor"></p>
@@ -39,6 +39,7 @@
             <p class="solidLine" :style="bgColor"  id="firstBottomLine"></p>
           </div>
           <footer>24/7English</footer>
+          <p class="pageNumOne">p.1</p>
         </div>
         <div class="page" id="secondPage">
           <!-- <img src="../assets/back.png" alt="" class="pic"> -->
@@ -76,9 +77,11 @@
               </div>
               <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
             </div>
+            <div class="topicHead">Simulation</div>
             <div class="topic">
               {{ chapterContent[4] }}
             </div>
+            <div class="topic" id="simulationBar" :style="bgColor"></div>
             <div class="topic" id="cTopic" :style="bgColor"></div>
             <div class="topic" id="wTopic"></div>
             <div class="triangleUpLeft"></div>
@@ -88,6 +91,7 @@
           </div>
           <p class="solidLine" :style="bgColor" id="lastLine"></p>
           <footer id="lastFooter">24/7English</footer>
+          <p class="pageNumTwo">p.2</p>
         </div>
       </div>
     </div>
@@ -199,7 +203,7 @@ export default {
 .page {
   height: 257mm;
   margin-right: 20px;
-  padding: 57px 47px 40px 35px;
+  padding: 17px 47px 40px 35px;
   margin-bottom: 70px;
   font-family: "メイリオ", Meiryo;
 }
@@ -508,13 +512,24 @@ footer {
   padding: 55px 14px 0 97px;
   border-radius: 1px;
   position: relative;
-  top: 38px;
+  top: 10px;
   font-size: 11px;
+  z-index: 8;
+  font-weight: 600;
+}
+
+.topicHead {
+  display: inline;
+  position: relative;
+  font-weight: 600;
+  top: 48px;
   z-index: 10;
+  left: -156px;
+  font-size: 19px;
 }
 
 #cTopic {
-  z-index: 8;
+  z-index: 7;
   position: absolute;
   top: 549px;
 }
@@ -522,9 +537,18 @@ footer {
 #wTopic {
   background-color: #ffffff;
   opacity: 0.7;
-  z-index: 9;
+  z-index: 7;
   position: absolute;
   top: 549px;
+}
+
+#simulationBar {
+  z-index: 9;
+  top: -99px;
+  height: 0px;
+  padding: 8px;
+  width: 92px;
+  left: 31px;
 }
 
 .triangleUpLeft {
@@ -554,12 +578,12 @@ footer {
 }
 
 #lastLine {
-  top: 53.5px;
+  top: 8px;
   left: 2px;
 }
 
 #lastFooter {
-  top: 59px;
+  top: 16px;
   font-size: 12px;
   left: 2px;
 }
@@ -575,6 +599,7 @@ footer {
 
 #secondPage {
   margin-bottom: 34px;
+  padding-top: 97px;
 }
 
 .hole {
@@ -593,6 +618,31 @@ img {
   width: 64px;
   z-index: 10;
   left: 9px;
-  top: 606px;
+  top: 607px;
 }
+
+.logo {
+  position: relative;
+  z-index: 10;
+  width: 124px;
+  top: 7px;
+  left: 236px;
+}
+
+.pageNumOne {
+  display: inline;
+  position: relative;
+  left: 278px;
+  top: -22px;
+  font-size: 12px;
+}
+
+.pageNumTwo {
+  display: inline;
+  position: relative;
+  left: 278px;
+  top: -15px;
+  font-size: 12px;
+}
+
 </style>
