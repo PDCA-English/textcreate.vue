@@ -129,7 +129,7 @@ export default {
         scale: 3
       }).then((canvas) => {
         //! MAKE YOUR PDF
-        var pdf = new jsPDF("p", "pt", "b5");
+        var pdf = new jsPDF("p", "pt", "b5", true);
 
         console.log(i <= source.offsetHeight / 980);
 
@@ -176,11 +176,9 @@ export default {
             pdf.addPage();
           }
           //! now we add content to that page!
-          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3);
+          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3, undefined, "FAST");
 
           if ((i+1) % 2 == 0) {
-            // pdf.save(this.pageSetting[0] + "-" + (i+1)/2 + ".pdf");
-            // pdf.save(this.pageSetting[0] + "-" + ( '00' + (i+1)/2 ).slice( -2 ) + ".pdf");
             pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + ".pdf");
             pdf.deletePage(1);
             pdf.deletePage(1);
@@ -218,7 +216,7 @@ export default {
 
 #headNo {
   position: relative;
-  top: 16px;
+  top: 13px;
   left: -64px;
   font-size: 17px;
   font-weight: 700;
@@ -231,7 +229,7 @@ export default {
   position: relative;
   font-weight: 700;
   left: -41px;
-  top: 4px;
+  top: 0;
 }
 
 .frontHeader {
@@ -246,7 +244,7 @@ export default {
   top: 0;
   right: 1px;
   margin: 0;
-  padding: 13px;
+  padding: 4px 0 22px 14px;
   text-align: left;
   font-weight: 700;
   height: 17px;
@@ -368,7 +366,7 @@ export default {
 .backTitle {
   text-align: center;
   position: relative;
-  top: 6px;
+  top: 0px;
   font-size: 24px;
 }
 
@@ -377,7 +375,7 @@ export default {
   font-size: 13px;
   width: 60px;
   margin: 0 0 0 auto;
-  top: -59px;
+  top: -64px;
   right: 16px;
 }
 
