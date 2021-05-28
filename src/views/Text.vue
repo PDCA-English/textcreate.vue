@@ -210,14 +210,15 @@ export default {
   background-color: #ffffff;
   border-radius: 50%;
   margin: 18px 11px 14px 17px;
-  height: 56px;
-  width: 100px;
+  height: 55px;
+  width: 53px;
+  position: absolute;
 }
 
 #headNo {
   position: relative;
   top: 13px;
-  left: -64px;
+  left: 19px;
   font-size: 17px;
   font-weight: 700;
 }
@@ -225,11 +226,12 @@ export default {
 #headTitle {
   font-size: 23px;
   text-align: left;
-  width: 217px;
+  width: 199px;
   position: relative;
   font-weight: 700;
-  left: -41px;
+  left: 39px;
   top: 0;
+  padding-right: 44px;
 }
 
 .frontHeader {
@@ -315,7 +317,7 @@ export default {
 }
 
 .eachContent {
-  width: 600px;
+  width: 506px;
   height: 60px;
 }
 
@@ -500,6 +502,7 @@ footer {
   position: relative;
   top: 7px;
   font-size: 12px;
+  right: -222px;
 }
 
 .topic {
@@ -583,7 +586,7 @@ footer {
 #lastFooter {
   top: 16px;
   font-size: 12px;
-  left: 2px;
+  right: -222px;
 }
 
 .pic {
@@ -631,7 +634,7 @@ img {
   display: inline;
   position: relative;
   left: 278px;
-  top: -22px;
+  top: -16px;
   font-size: 12px;
 }
 
@@ -639,7 +642,7 @@ img {
   display: inline;
   position: relative;
   left: 278px;
-  top: -15px;
+  top: -7px;
   font-size: 12px;
 }
 
