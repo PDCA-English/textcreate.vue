@@ -254,7 +254,7 @@ export default {
   padding: 27px 0 22px 14px;
   text-align: left;
   font-weight: 700;
-  height: 38px;
+  height: 38.5px;
   width: 323px;
 }
 
