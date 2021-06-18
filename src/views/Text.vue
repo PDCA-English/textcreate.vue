@@ -126,7 +126,11 @@ export default {
       const source = this.$refs.pdf;
       
       html2canvas(source,{
-        scale: 3
+        scale: 3,
+        logging: true,
+        letterRendering: 1,
+        useCORS: true,
+        allowTaint: false
       }).then((canvas) => {
         //! MAKE YOUR PDF
         var pdf = new jsPDF("p", "pt", "b5", true);
@@ -176,12 +180,13 @@ export default {
             pdf.addPage();
           }
           //! now we add content to that page!
-          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3, undefined, "FAST");
+          pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3, "", "FAST");
 
           if ((i+1) % 2 == 0) {
             pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + ".pdf");
+            pdf = new jsPDF("p", "pt", "b5", true);
             pdf.deletePage(1);
-            pdf.deletePage(1);
+            // pdf.deletePage(1);
           }
         }
         //! after the for loop is finished running, we save the pdf.
@@ -246,10 +251,11 @@ export default {
   top: 0;
   right: 1px;
   margin: 0;
-  padding: 4px 0 22px 14px;
+  padding: 27px 0 22px 14px;
   text-align: left;
   font-weight: 700;
-  height: 17px;
+  height: 38px;
+  width: 323px;
 }
 
 .deleteDot {
@@ -260,7 +266,6 @@ export default {
   display: flex;
   font-size: 30px;
   width: 250px;
-  border-radius: 0 0 10px 0;
 }
 
 .solidLine {
@@ -354,6 +359,7 @@ export default {
   text-align: left;
   padding-top: 2px;
   padding-left: 15px;
+  display: none;
 }
 
 .backHeader {
