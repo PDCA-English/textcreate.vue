@@ -12,10 +12,16 @@
             <div class="frontHeaderLeft" :style="bgColor">
               <p id="bgNo"></p>
               <p id="headNo">{{ chapterContent[0] }}</p>
-              <p :style="titleColor" id="headTitle">{{ chapterContent[1] }}</p>
+              <p :style="titleColor" id="headTitleBr" v-if="chapterContent[1].includes('<br>')" v-html="chapterContent[1]"></p>
+              <p :style="titleColor" id="headTitle" v-else-if="chapterContent[1].length < 8" v-html="chapterContent[1]"></p>
+              <p :style="titleColor" id="headTitleSh" v-else-if="chapterContent[1].length >= 8 && chapterContent[1].length < 9" v-html="chapterContent[1]"></p>
+              <p :style="titleColor" id="headTitleBr" v-else-if="getByteLength(chapterContent[1]) >= 9" v-html="chapterContent[1]"></p>
             </div>
             <div class="frontHeaderRight">
-              <p id="eTitle" :style="[bgColor, titleColor]">{{ chapterContent[2] }}</p>
+              <p id="eTitleBr" :style="[bgColor, titleColor]" v-if="chapterContent[2].includes('<br>')" v-html="chapterContent[2]"></p>
+              <p id="eTitle" :style="[bgColor, titleColor]" v-else-if="getByteLength(chapterContent[1]) < 21" v-html="chapterContent[2]"></p>
+              <p id="eTitleSh" :style="[bgColor, titleColor]" v-else-if="getByteLength(chapterContent[1]) >= 21 && getByteLength(chapterContent[1]) < 30" v-html="chapterContent[2]"></p>
+              <p id="eTitleBr" :style="[bgColor, titleColor]" v-else-if="getByteLength(chapterContent[1]) >= 30" v-html="chapterContent[2]"></p>
               <p  id="intro">{{ chapterContent[3] }}</p>
             </div>
           </div>
@@ -31,8 +37,10 @@
                 <p class="eachNum">{{ firstPageContent[0] }}</p>
               </div>
               <div class="eachContent">
-                <p class="firstEsentence" v-html="firstPageContent[1]"></p>
-                <p class="firstJsentence">{{ firstPageContent[2] }}</p>
+                <p class="firstEsentenceBr" v-if="firstPageContent[1].includes('<br>')" v-html="firstPageContent[1]"></p>
+                <p class="firstEsentence" v-else v-html="firstPageContent[1]"></p>
+                <p class="firstJsentenceBr" v-if="firstPageContent[1].includes('<br>')">{{firstPageContent[3]}}</p>
+                <p class="firstJsentence" v-else>{{firstPageContent[3]}}</p>
                 <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
@@ -58,7 +66,7 @@
           <div class="backBody">
             <div
               class="eachSentenceBack"
-              v-for="secondPageContent in chapterContent.slice(5, 15)"
+              v-for="secondPageContent in chapterContent.slice(5, 16)"
               v-bind:key="secondPageContent.id"
             >
               <div class="secondFlex">            
@@ -67,19 +75,34 @@
                   <p class="eachNum" id="secondEachNum">{{ secondPageContent[0] }}</p>
                 </div>
                 <div class="eachContent" id="backEachContent">
-                  <p id="backJsentence" v-if="secondPageContent[2].length > 24">{{ secondPageContent[2] }}</p>
-                  <p id="shortBackJsentence" v-if="secondPageContent[2].length <= 24">{{ secondPageContent[2] }}</p>
+                  <p id="longBackJsentence" v-if="secondPageContent[2].includes('<br>')" v-html="secondPageContent[2]"></p>
+                  <p id="shortBackJsentence" v-else-if="getByteLength(secondPageContent[2]) < 78" v-html="secondPageContent[2]"></p>
+                  <p id="backJsentence" v-else-if="getByteLength(secondPageContent[2]) >= 78 && getByteLength(secondPageContent[2]) <= 81" v-html="secondPageContent[2]"></p>
+                  <p id="longBackJsentence" v-else-if="getByteLength(secondPageContent[2]) > 81" v-html="secondPageContent[2]"></p>
                 </div>
                 <div class="eachHint" :style="dotLine">
-                  <p id="hintone">◉ {{ secondPageContent[3] }}</p>
-                  <p id="hinttwo">{{ secondPageContent[4] }}</p>
+                  <p id="hintone" v-html="secondPageContent[5]"></p>
+
+
+                  <!-- <p id="hintoneBr" v-if="secondPageContent[5].includes('<br>')" v-html="secondPageContent[5]"></p>
+                  <p id="hintone" v-else-if="getByteLength(secondPageContent[5]) < 78" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneSh" v-else-if="getByteLength(secondPageContent[5]) >= 78 && getByteLength(secondPageContent[5]) <= 81" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneBr" v-else-if="getByteLength(secondPageContent[5]) > 81" v-html="secondPageContent[5]"></p> -->
+
+                  <p id="hinttwo" v-html="secondPageContent[6]"></p>
+
+                  <!-- <p id="hinttwoBr" v-if="secondPageContent[6].includes('<br>')" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwo" v-else-if="getByteLength(secondPageContent[6]) < 78" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoSh" v-else-if="getByteLength(secondPageContent[6]) >= 78 && getByteLength(secondPageContent[6]) <= 81" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoBr" v-else-if="getByteLength(secondPageContent[6]) > 81" v-html="secondPageContent[6]"></p> -->
+
+
                 </div>
               </div>
               <p class="dotline" id="secondDot" :style="dotLine" v-if="secondPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
             </div>
             <div class="topicHead">Simulation</div>
-            <div class="topic">
-              {{ chapterContent[4] }}
+            <div class="topic" v-html="chapterContent[4]">
             </div>
             <div class="topic" id="simulationBar" :style="bgColor"></div>
             <div class="topic" id="cTopic" :style="bgColor"></div>
@@ -118,9 +141,12 @@ export default {
     this.bgColor = { background: this.pageSetting[2] };
     this.titleColor = { color: this.pageSetting[3]};
     this.dotLine = { color: this.pageSetting[2]};
-
   },
   methods: {
+    getByteLength(str){
+      str = (str==null)?"":str;
+      return encodeURI(str).replace(/%../g, "*").length;
+    },
     downloadPDF() {
       console.log("start download");
       const source = this.$refs.pdf;
@@ -231,12 +257,24 @@ export default {
 #headTitle {
   font-size: 23px;
   text-align: left;
-  width: 199px;
+  width: 171px;
   position: relative;
   font-weight: 700;
   left: 39px;
   top: 0;
-  padding-right: 44px;
+  padding-right: 0px;
+}
+
+#headTitleSh {
+  font-size: 23px;
+  text-align: left;
+  width: 171px;
+  position: relative;
+  font-weight: 700;
+  left: 39px;
+  top: 0;
+  padding-right: 0px;
+  letter-spacing: -2px;
 }
 
 .frontHeader {
@@ -251,11 +289,39 @@ export default {
   top: 0;
   right: 1px;
   margin: 0;
-  padding: 27px 0 22px 14px;
+  padding: 27px 0 22px 0px;
   text-align: left;
   font-weight: 700;
   height: 38.5px;
   width: 323px;
+}
+
+#eTitleBr {
+  font-size: 18px;
+  position: relative;
+  top: 0;
+  right: 1px;
+  margin: 0;
+  padding: 27px 0 22px 0px;
+  text-align: left;
+  font-weight: 700;
+  height: 38.5px;
+  width: 323px;
+  line-height: 19px;
+}
+
+#eTitleSh {
+  font-size: 18px;
+  position: relative;
+  top: 0;
+  right: 1px;
+  margin: 0;
+  padding: 27px 0 22px 0px;
+  text-align: left;
+  font-weight: 700;
+  height: 38.5px;
+  width: 323px;
+  letter-spacing: -1px;
 }
 
 .deleteDot {
@@ -265,7 +331,7 @@ export default {
 .frontHeaderLeft {
   display: flex;
   font-size: 30px;
-  width: 250px;
+  width: 263px;
 }
 
 .solidLine {
@@ -344,6 +410,17 @@ export default {
   letter-spacing: -0.2px;
 }
 
+.firstEsentenceBr {
+  text-align: left;
+  margin-bottom: 0;
+  margin-top: 5px;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 18px;
+  margin-top: -3px;
+}
+
 .firstJsentence {
   text-align: left;
   margin-top: 0;
@@ -352,6 +429,18 @@ export default {
   position: relative;
   top: -1px;
   font-weight: 700;
+}
+
+.firstJsentenceBr {
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  position: relative;
+  top: -1px;
+  font-weight: 700;
+  margin-top: 5px;
+  margin-bottom: -8px;
 }
 
 #intro {
@@ -482,6 +571,14 @@ export default {
 }
 
 #backJsentence {
+  text-align: left;
+  padding: auto 0;
+  height: 60px;
+  width: 326px;
+  letter-spacing: -0.9px;
+}
+
+#longBackJsentence {
   text-align: left;
   margin: auto 0;
   padding-top: 5px;
@@ -650,6 +747,19 @@ img {
   left: 278px;
   top: -7px;
   font-size: 12px;
+}
+
+#headTitleBr {
+  font-size: 23px;
+  text-align: left;
+  width: 162px;
+  position: relative;
+  font-weight: 700;
+  left: 39px;
+  top: 0;
+  padding-right: 0px;
+  line-height: 27px;
+  margin-top: 17px;
 }
 
 </style>
