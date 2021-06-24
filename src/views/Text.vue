@@ -75,10 +75,9 @@
                   <p class="eachNum" id="secondEachNum">{{ secondPageContent[0] }}</p>
                 </div>
                 <div class="eachContent" id="backEachContent">
-                  <p id="longBackJsentence" v-if="secondPageContent[2].includes('<br>')" v-html="secondPageContent[2]"></p>
-                  <p id="shortBackJsentence" v-else-if="getByteLength(secondPageContent[2]) < 78" v-html="secondPageContent[2]"></p>
-                  <p id="backJsentence" v-else-if="getByteLength(secondPageContent[2]) >= 78 && getByteLength(secondPageContent[2]) <= 81" v-html="secondPageContent[2]"></p>
-                  <p id="longBackJsentence" v-else-if="getByteLength(secondPageContent[2]) > 81" v-html="secondPageContent[2]"></p>
+                  <p id="longBackJsentence" v-if="secondPageContent[2].includes('<br>') || secondPageContent[2].includes('<a>')" v-html="secondPageContent[2]"></p>
+                  <p id="backJsentence" v-else-if="secondPageContent[2].includes('<b>')" v-html="secondPageContent[2]">></p>
+                  <p id="shortBackJsentence" v-else v-html="secondPageContent[2]"></p>
                 </div>
                 <div class="eachHint" :style="dotLine">
                   <!-- <p id="hintone" v-html="secondPageContent[5]"></p> -->
