@@ -39,8 +39,8 @@
               <div class="eachContent">
                 <p class="firstEsentenceBr" v-if="firstPageContent[1].includes('<br>')" v-html="firstPageContent[1]"></p>
                 <p class="firstEsentence" v-else v-html="firstPageContent[1]"></p>
-                <p class="firstJsentenceBr" v-if="firstPageContent[1].includes('<br>')">{{firstPageContent[3]}}</p>
-                <p class="firstJsentence" v-else>{{firstPageContent[3]}}</p>
+                <p class="firstJsentenceBr" v-if="firstPageContent[1].includes('<br>')" v-html="firstPageContent[3]"></p>
+                <p class="firstJsentence" v-else v-html="firstPageContent[3]"></p>
                 <p class="dotline" :style="dotLine"  v-if="firstPageContent[0] !== '10'">--------------------------------------------------------------------------------------------------------------------------</p>
               </div>
             </div>
