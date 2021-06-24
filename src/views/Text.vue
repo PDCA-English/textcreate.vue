@@ -81,21 +81,23 @@
                   <p id="longBackJsentence" v-else-if="getByteLength(secondPageContent[2]) > 81" v-html="secondPageContent[2]"></p>
                 </div>
                 <div class="eachHint" :style="dotLine">
-                  <p id="hintone" v-html="secondPageContent[5]"></p>
+                  <!-- <p id="hintone" v-html="secondPageContent[5]"></p> -->
 
+                  <p id="hintoneSh" v-if="secondPageContent[5].includes('<b>') && !secondPageContent[6].includes('<br>') && !secondPageContent[6].includes('<a>')" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneTwolineBrSh" v-else-if="secondPageContent[5].includes('<b>') && (secondPageContent[6].includes('<br>') || secondPageContent[6].includes('<a>'))" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneBothBr" v-else-if="(secondPageContent[5].includes('<br>') || secondPageContent[5].includes('<a>')) && (secondPageContent[6].includes('<br>') || secondPageContent[6].includes('<a>'))" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneTwolineBr" v-else-if="(secondPageContent[5].includes('<br>') || secondPageContent[5].includes('<a>')) && (!secondPageContent[6].includes('<br>') || !secondPageContent[6].includes('<a>'))" v-html="secondPageContent[5]"></p>
+                  <p id="hintoneOnelineBr" v-else-if="(!secondPageContent[5].includes('<br>') || !secondPageContent[5].includes('<a>')) && (secondPageContent[6].includes('<br>') || secondPageContent[6].includes('<a>'))" v-html="secondPageContent[5]"></p>
+                  <p id="hintone" v-else v-html="secondPageContent[5]"></p>
 
-                  <!-- <p id="hintoneBr" v-if="secondPageContent[5].includes('<br>')" v-html="secondPageContent[5]"></p>
-                  <p id="hintone" v-else-if="getByteLength(secondPageContent[5]) < 78" v-html="secondPageContent[5]"></p>
-                  <p id="hintoneSh" v-else-if="getByteLength(secondPageContent[5]) >= 78 && getByteLength(secondPageContent[5]) <= 81" v-html="secondPageContent[5]"></p>
-                  <p id="hintoneBr" v-else-if="getByteLength(secondPageContent[5]) > 81" v-html="secondPageContent[5]"></p> -->
+                  <!-- <p id="hinttwo" v-html="secondPageContent[6]"></p> -->
 
-                  <p id="hinttwo" v-html="secondPageContent[6]"></p>
-
-                  <!-- <p id="hinttwoBr" v-if="secondPageContent[6].includes('<br>')" v-html="secondPageContent[6]"></p>
-                  <p id="hinttwo" v-else-if="getByteLength(secondPageContent[6]) < 78" v-html="secondPageContent[6]"></p>
-                  <p id="hinttwoSh" v-else-if="getByteLength(secondPageContent[6]) >= 78 && getByteLength(secondPageContent[6]) <= 81" v-html="secondPageContent[6]"></p>
-                  <p id="hinttwoBr" v-else-if="getByteLength(secondPageContent[6]) > 81" v-html="secondPageContent[6]"></p> -->
-
+                  <p id="hinttwoSh" v-if="secondPageContent[6].includes('<b>') && !secondPageContent[5].includes('<br>') && !secondPageContent[5].includes('<a>')" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoOnelineBrSh" v-else-if="secondPageContent[6].includes('<b>') && (secondPageContent[5].includes('<br>') || secondPageContent[5].includes('<a>'))" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoBothBr" v-else-if="(secondPageContent[6].includes('<br>') || secondPageContent[6].includes('<a>')) && (secondPageContent[5].includes('<br>') || secondPageContent[5].includes('<a>'))" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoTwolineBr" v-else-if="(secondPageContent[6].includes('<br>') || secondPageContent[6].includes('<a>')) && (!secondPageContent[5].includes('<br>') || !secondPageContent[5].includes('<a>'))" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwoOnelineBr" v-else-if="(!secondPageContent[6].includes('<br>') || !secondPageContent[6].includes('<a>'))&& (secondPageContent[5].includes('<br>') || secondPageContent[5].includes('<a>'))" v-html="secondPageContent[6]"></p>
+                  <p id="hinttwo" v-else v-html="secondPageContent[6]"></p>
 
                 </div>
               </div>
@@ -563,11 +565,69 @@ export default {
 #hintone {
   margin-top: 9px;
   margin-bottom: 2px;
+}
 
+#hintoneSh {
+  margin-top: 9px;
+  margin-bottom: 2px;
+  letter-spacing: -1px;
+}
+
+#hintoneBothBr {
+  margin-top: 9px;
+  margin-bottom: 2px;
+  margin-top: 1px;
+  line-height: 12px;
+}
+
+#hintoneTwolineBr {
+  margin-top: 9px;
+  margin-bottom: 2px;
+  margin-top: 5px;
+  line-height: 11px;
+}
+
+#hintoneTwolineBrSh {
+  margin-top: 9px;
+  margin-bottom: 2px;
+  margin-top: 5px;
+  line-height: 11px;
+  letter-spacing: -1px;
+}
+
+#hintoneOnelineBr {
+  margin-top: 9px;
+  margin-bottom: 2px;
+  margin-top: 3px;
 }
 
 #hinttwo {
   margin: 2px 0 9px 12px;
+}
+
+#hinttwoSh {
+  margin: 2px 0 9px 12px;
+  letter-spacing: -1.2px;
+}
+
+#hinttwoBothBr {
+  margin: 2px 0 9px 12px;
+  margin-top: -1px;
+  line-height: 10px;
+}
+
+#hinttwoTwolineBr {
+  margin: 2px 0 9px 12px;
+  line-height: 12px;
+}
+
+#hinttwoOnelineBr {
+  margin: 2px 0 9px 12px;
+}
+
+#hinttwoOnelineBrSh {
+  margin: 2px 0 9px 12px;
+  letter-spacing: -1.2px;
 }
 
 #backJsentence {
