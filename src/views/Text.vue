@@ -635,7 +635,7 @@ export default {
   padding: auto 0;
   height: 60px;
   width: 326px;
-  letter-spacing: -0.9px;
+  letter-spacing: -1px;
 }
 
 #longBackJsentence {
