@@ -210,7 +210,11 @@ export default {
           pdf.addImage(canvasDataURL, "PNG", 50/3, 50/3, width * 0.71/3, height * 0.8/3, "", "FAST");
 
           if ((i+1) % 2 == 0) {
-            pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + ".pdf");
+            if (this.chapterContents[((i+1)/2)-1][1].includes("<br>")) {
+              pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + " " + this.chapterContents[((i+1)/2)-1][1].replace(/<br>/g, ' ') + ".pdf");
+            } else {
+              pdf.save(this.pageSetting[0] + "-" + this.chapterContents[((i+1)/2)-1][0].slice( -2 ) + " " + this.chapterContents[((i+1)/2)-1][1] + ".pdf");
+            }
             pdf = new jsPDF("p", "pt", "b5", true);
             pdf.deletePage(1);
             // pdf.deletePage(1);
